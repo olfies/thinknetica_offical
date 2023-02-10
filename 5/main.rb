@@ -7,6 +7,8 @@ require_relative 'cargo_wagon.rb'
 require_relative 'passenger_wagon.rb'
 require_relative 'wagon.rb'
 
+require 'pry'
+
 class Main
   def select_actions_menu
     puts <<-HEREDOC
@@ -69,7 +71,9 @@ class Main
   private
 
   def list_all_stations
-    #super code
+    all_stations = @stations.map(&:name)
+
+    p all_stations.join(',')
   end
 
   def create_station
