@@ -68,6 +68,10 @@ class Main
 
   private
 
+  def list_all_stations
+    #super code
+  end
+
   def create_station
     puts 'Please provide station name:'
     station_name = gets.chomp
