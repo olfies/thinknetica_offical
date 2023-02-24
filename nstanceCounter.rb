@@ -1,11 +1,6 @@
 module InstanceCounter
   attr_reader :instances
 
-  def self.included(receiver)
-    receiver.extend         ClassMethods
-    receiver.send :include, InstanceMethods
-  end
-
 module ClassMethods
 
   def instances

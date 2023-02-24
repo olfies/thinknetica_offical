@@ -86,7 +86,6 @@ attr_accessor :stations,
     @trains.carriage.delete(num)
   end
 
-  # Разобрался, переделал.
   def add_train_to_station
     puts "Выберите номер станции к которой хотите добавить поезд"
     puts all_stations

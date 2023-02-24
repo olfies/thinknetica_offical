@@ -32,8 +32,6 @@ class << self; attr_accessor :trains end
     puts speed
   end
 
-# Добавление вагонов
-
   def add_carriage(carriage)
     puts "Cначала остановите поезд!" if @speed != 0
     if carriage.type != @type
@@ -53,8 +51,6 @@ class << self; attr_accessor :trains end
       puts "Удален вагон, в составе осталось #{self.carriages.size} вагона"
     end
   end
-
-# Маршрут следования
 
   def accept_route(route)
     @route = route
@@ -97,11 +93,6 @@ class << self; attr_accessor :trains end
       puts "Поезд приехал на станцию #{self.current_station}"
     end
   end
-
-  # В классе Train создать метод класса find,
-# который принимает номер поезда (указанный при его создании) и
-# возвращает объект поезда по номеру или nil, если поезд с таким номером не найден.
-# Зачем так сложно? Почему не просто: @@trains[num].
 
 def self.find(num)
   @trains[num]
