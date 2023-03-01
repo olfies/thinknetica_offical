@@ -1,6 +1,7 @@
-# frozen_string_literal: true
 require 'pry'
 require_relative 'instance_counter.rb'
+require_relative 'cargo_train.rb'
+require_relative 'passenger_train.rb'
 class Train
   include InstanceCounter
 
@@ -30,7 +31,6 @@ class Train
   end
 
   def stop
-    binding.pry
     @speed = 0
   end
 
@@ -94,7 +94,6 @@ class Train
     elsif @current_station != @route.list_stations.last
       puts 'Это еще не конечная станция, едем вперед'
     else
-      #@current_station == prev_station
       puts "Поезд приехал на станцию #{current_station}"
     end
   end
@@ -113,11 +112,3 @@ class Train
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
   end
 end
-
-require_relative 'cargo_train.rb'
-require_relative 'passenger_train.rb'
-
-t1 = Train.new("12323")
-t2 = Train.new("444")
-t3 = Train.new("5555")
-t1.stop
