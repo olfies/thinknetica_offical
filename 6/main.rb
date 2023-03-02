@@ -4,10 +4,8 @@ require_relative 'train.rb'
 require_relative 'carriage.rb'
 require_relative 'cargo_carriage.rb'
 require_relative 'passenger_carriage.rb'
-
-
-
 class Controller
+
 attr_accessor :stations,
               :trains
 

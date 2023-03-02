@@ -22,7 +22,7 @@ class Train
     @carriages = []
     @speed = 0
     @route = []
-    @@trains << { number: num, train: self }
+    @@trains << self
     register_instance
   end
 
@@ -98,9 +98,7 @@ class Train
     end
   end
 
-  def self.find(num)
-    @trains[num]
-  end
+  @trains.find { |train| train.num == num }
 
   private
 
