@@ -5,9 +5,8 @@ require_relative 'carriage.rb'
 require_relative 'cargo_carriage.rb'
 require_relative 'passenger_carriage.rb'
 class Controller
-
-attr_accessor :stations,
-              :trains
+  attr_accessor :stations,
+                :trains
 
   def initialize
     @stations = []
@@ -15,40 +14,40 @@ attr_accessor :stations,
   end
 
   def run
-    puts "Что вы хотите сделать?"
+    puts 'Что вы хотите сделать?'
     action = gets.chomp
     case action
-      when "1"
-        new_station
-      when "2"
-        new_train
-      when "3"
-        add_carriage
-      when "4"
-        delete_carriage
-      when "5"
-        add_train_to_station
-      when "6"
-        all_stations
-      when "7"
-        list_trains_to_station
-      when "8"
-        exit
+    when '1'
+      new_station
+    when '2'
+      new_train
+    when '3'
+      add_carriage
+    when '4'
+      delete_carriage
+    when '5'
+      add_train_to_station
+    when '6'
+      all_stations
+    when '7'
+      list_trains_to_station
+    when '8'
+      exit
     end
   end
 
   def new_station
-    puts "Укажите имя станции:"
+    puts 'Укажите имя станции:'
     name = gets.chomp
     station = Station.new(name)
     @stations.push(station)
     puts "Создана станция #{name}"
   end
 
- def new_train
-    puts "Укажите тип поезда (cargo или passenger)"
+  def new_train
+    puts 'Укажите тип поезда (cargo или passenger)'
     type = gets.chomp.to_sym
-    puts "Укажите номер поезда"
+    puts 'Укажите номер поезда'
     num = gets.chomp
 
     train_class = TRAIN_TYPES[type]
@@ -56,16 +55,16 @@ attr_accessor :stations,
       @trains.push(train_class.new(num))
       puts "Создан поезд типа #{type} номер #{num}"
     else
-      puts "Такого типа поезда нет"
+      puts 'Такого типа поезда нет'
     end
-  end
+   end
 
   def all_trains
-     @trains.each_with_index { |train, n| puts "#{n} #{train.num}"}
+    @trains.each_with_index { |train, n| puts "#{n} #{train.num}" }
   end
 
   def add_carriage
-    puts "Укажите номер поезда"
+    puts 'Укажите номер поезда'
     all_trains
     num = gets.chomp.to_i
     carriage_type = Carriage[@trains[num].type]
@@ -73,23 +72,23 @@ attr_accessor :stations,
       @trains[num].carriages.push(carriage_type.new)
       puts "Этот поезд типа #{@trains[num].type}, к нему будет добавлен вагон типа #{carriage_type}"
     else
-      puts "Такого поезда нет"
+      puts 'Такого поезда нет'
     end
   end
 
   def delete_carriage
-    puts "Укажите номер поезда"
+    puts 'Укажите номер поезда'
     all_trains
     num = gets.chomp
     @trains.carriage.delete(num)
   end
 
   def add_train_to_station
-    puts "Выберите номер станции к которой хотите добавить поезд"
+    puts 'Выберите номер станции к которой хотите добавить поезд'
     puts all_stations
     num_st = gets.chomp.to_i
 
-    puts "Укажите номер поезда"
+    puts 'Укажите номер поезда'
     all_trains
     num_tr = gets.chomp.to_i
     @stations[num_st].add_train(trains[num_tr])
@@ -98,17 +97,16 @@ attr_accessor :stations,
   end
 
   def all_stations
-    @stations.each_with_index{ |station, n| puts " #{n} #{station.name}" }
+    @stations.each_with_index { |station, n| puts " #{n} #{station.name}" }
   end
 
   def list_trains_to_station
-    puts "Выберите номер станции"
+    puts 'Выберите номер станции'
     puts all_stations
     num_st = gets.chomp.to_i
     puts "На станции #{all_stations[num_st].name} находятся поезда: "
-    @stations[num_st].trains.each_with_index{ |num, n| puts "#{n} #{num}" }
+    @stations[num_st].trains.each_with_index { |num, n| puts "#{n} #{num}" }
   end
-
 end
 
 controller = Controller.new

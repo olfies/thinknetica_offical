@@ -1,7 +1,6 @@
-require_relative'train.rb'
+require_relative 'train.rb'
 class CargoTrain < Train
-
-@trains = {}
+  @trains = {}
 
   def initialize(num)
     super

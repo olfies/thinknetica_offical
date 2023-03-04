@@ -98,7 +98,9 @@ class Train
     end
   end
 
-  @trains.find { |train| train.num == num }
+  def self.find(num)
+    @trains.find { |train| train.num == num }
+  end
 
   private
 

@@ -1,4 +1,4 @@
-require_relative'carriage'
+require_relative 'carriage'
 class PassengerCarriage < Carriage
   attr_accessor :type
 

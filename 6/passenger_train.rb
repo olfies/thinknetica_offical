@@ -1,6 +1,5 @@
 class PassengerTrain < Train
-
-@trains = {}
+  @trains = {}
 
   def initialize(num)
     super

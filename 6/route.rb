@@ -1,6 +1,5 @@
 class Route
-
-attr_accessor :list_stations
+  attr_accessor :list_stations
 
   def initialize(first, last)
     @list_stations = [first, last]
@@ -13,7 +12,7 @@ attr_accessor :list_stations
 
   def delete_station(station)
     if station == @list_stations[0] || station == @list_stations.last
-      puts "Это конечная станция, ее нельзя удалять!"
+      puts 'Это конечная станция, ее нельзя удалять!'
     else
       list_stations.delete(station)
       puts "Из маршрута была удалена станция #{station}"
@@ -23,5 +22,4 @@ attr_accessor :list_stations
   def print_all_stations
     puts list_stations
   end
-
 end
