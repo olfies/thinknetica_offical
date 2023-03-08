@@ -27,4 +27,4 @@ class CargoCarriage < Carriage
   end
 
 end
-end
+
