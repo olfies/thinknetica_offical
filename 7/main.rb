@@ -4,6 +4,7 @@ require_relative 'train.rb'
 require_relative 'carriage.rb'
 require_relative 'cargo_carriage.rb'
 require_relative 'passenger_carriage.rb'
+
 class Controller
   attr_accessor :stations,
                 :trains
@@ -17,24 +18,18 @@ class Controller
     puts 'Что вы хотите сделать?'
     action = gets.chomp
     case action
-    when '1'
-      new_station
-    when '2'
-      new_train
-    when '3'
-      add_carriage
-    when '4'
-      delete_carriage
-    when '5'
-      add_train_to_station
-    when '6'
-      all_stations
-    when '7'
-      list_trains_to_station
-    when '8'
-      exit
+    when '1' then new_station
+    when '2' then new_train
+    when '3' then add_carriage
+    when '4' then delete_carriage
+    when '5' then add_train_to_station
+    when '6' then all_stations
+    when '7' then list_trains_to_station
+    when '8' then exit
     end
   end
+
+  private
 
   def new_station
     puts 'Укажите имя станции:'
