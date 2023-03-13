@@ -1,9 +1,6 @@
-require 'pry'
-require_relative 'instance_counter.rb'
 require_relative 'cargo_train.rb'
 require_relative 'passenger_train.rb'
 class Train
-  include InstanceCounter
 
   attr_reader :carriage,
               :carriages,
@@ -121,8 +118,6 @@ class Train
   def validate!
     raise "Speed can't be less than zero!" if @speed < 0
     raise "You can't create train without any carriage!" if @carriages.nil?
-    raise "You can't create train without a number!" unless @number =~ NUMBER_FORMAT
-
     true
   end
 
