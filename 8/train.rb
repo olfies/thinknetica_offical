@@ -1,7 +1,6 @@
 require_relative 'cargo_train.rb'
 require_relative 'passenger_train.rb'
 class Train
-
   attr_reader :carriage,
               :carriages,
               :speed,
@@ -31,6 +30,13 @@ class Train
 
   def print_speed
     puts speed
+  end
+
+  def train_in(block)
+    @trains.values.flatten.each do |train|
+    @trains.values.flatten.each(&block)
+    block.call(train)
+    end
   end
 
   def add_carriage(carriage)
@@ -118,6 +124,7 @@ class Train
   def validate!
     raise "Speed can't be less than zero!" if @speed < 0
     raise "You can't create train without any carriage!" if @carriages.nil?
+
     true
   end
 

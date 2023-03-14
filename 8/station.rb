@@ -18,6 +18,13 @@ class Station
     validate!
   end
 
+  def train_in(block)
+    @trains.values.flatten.each do |train|
+      @trains.values.flatten.each(&block)
+      block.call(train)
+    end
+  end
+
   def add_train(train)
     @trains[train.type].push(train.num)
     puts "На станцию #{name} Прибыл поезд #{train.num}"

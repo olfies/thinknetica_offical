@@ -16,22 +16,14 @@ class Controller
     puts 'Что вы хотите сделать?'
     action = gets.chomp
     case action
-    when '1'
-      new_station
-    when '2'
-      new_train
-    when '3'
-      add_carriage
-    when '4'
-      delete_carriage
-    when '5'
-      add_train_to_station
-    when '6'
-      all_stations
-    when '7'
-      list_trains_to_station
-    when '8'
-      exit
+    when '1' then new_station
+    when '2' then new_train
+    when '3' then add_carriage
+    when '4' then delete_carriage
+    when '5' then add_train_to_station
+    when '6' then all_stations
+    when '7' then list_trains_to_station
+    when '8' then exit
     end
   end
 
@@ -85,14 +77,14 @@ class Controller
   def add_train_to_station
     puts 'Выберите номер станции к которой хотите добавить поезд'
     puts all_stations
-    num_st = gets.chomp.to_i
+    num_station  = gets.chomp.to_i
 
     puts 'Укажите номер поезда'
     all_trains
     num_tr = gets.chomp.to_i
-    @stations[num_st].add_train(trains[num_tr])
+    @stations[num_station ].add_train(trains[num_tr])
 
-    puts "На станцию #{num_st} Прибыл поезд #{trains[num_tr]}"
+    puts "На станцию #{num_station } Прибыл поезд #{trains[num_tr]}"
   end
 
   def all_stations
@@ -102,19 +94,19 @@ class Controller
   def list_trains_to_station
     puts 'Выберите номер станции'
     puts all_stations
-    num_st = gets.chomp.to_i
-    puts "На станции #{all_stations[num_st].name} находятся поезда: "
-    @stations[num_st].trains.each_with_index { |num, n| puts "#{n} #{num}" }
+    num_station  = gets.chomp.to_i
+    puts "На станции #{all_stations[num_station ].name} находятся поезда: "
+    @stations[num_station ].trains.each_with_index { |num, n| puts "#{n} #{num}" }
   end
 
   def list_trains_to_station
     puts 'Выберите номер станции'
     puts all_stations
-    num_st = gets.chomp.to_i
-    selected_station = @stations[num_st]
+    num_station  = gets.chomp.to_i
+    selected_station = @stations[ation ]
     station = selected_station
     puts " На станции #{station.name} находятся поезда: "
-    trains = lambda do |train|
+    trains = |train|
       puts train
       puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
     end
