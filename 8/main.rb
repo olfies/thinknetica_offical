@@ -78,12 +78,10 @@ class Controller
     puts 'Выберите номер станции к которой хотите добавить поезд'
     puts all_stations
     num_station  = gets.chomp.to_i
-
     puts 'Укажите номер поезда'
     all_trains
     num_tr = gets.chomp.to_i
     @stations[num_station ].add_train(trains[num_tr])
-
     puts "На станцию #{num_station } Прибыл поезд #{trains[num_tr]}"
   end
 
@@ -107,11 +105,10 @@ class Controller
     station = selected_station
     puts " На станции #{station.name} находятся поезда: "
     trains = |train|
-      puts train
-      puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
-    end
+    puts train
+    puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
     station.train_in(trains)
-    end
+  end
 
   def list_carriages_to_train
     raise "Список поездов пуст, создайте поезд!" if @train.nil?
