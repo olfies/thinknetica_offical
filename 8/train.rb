@@ -33,9 +33,9 @@ class Train
   end
 
   def train_in(block)
-    @trains.values.flatten.each do |train|
+    @trains.values.flatten.each do |trains|
     @trains.values.flatten.each(&block)
-    block.call(train)
+    block.call(trains)
     end
   end
 
