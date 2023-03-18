@@ -32,11 +32,9 @@ class Train
     puts speed
   end
 
-  def train_in(block)
-    @trains.values.flatten.each do |trains|
-    @trains.values.flatten.each(&block)
-    block.call(trains)
-    end
+  def each_carriage
+    @carriages.each { |carriage| yield(carriage) } if block_given?
+    self
   end
 
   def add_carriage(carriage)

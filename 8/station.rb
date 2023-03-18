@@ -11,10 +11,7 @@ class Station
   def initialize(name)
     @@all.push(self)
     @name = name
-    @trains = [
-      cargo: [],
-      passenger: []
-    ]
+    @trains = []
     validate!
   end
 
