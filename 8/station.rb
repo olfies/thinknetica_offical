@@ -15,11 +15,9 @@ class Station
     validate!
   end
 
-  def train_in(block)
-    @trains.values.flatten.each do |train|
-      @trains.values.flatten.each(&block)
-      block.call(train)
-    end
+  def each_train
+    @trains.each { |train| yield(train) } if block_given?
+    self
   end
 
   def add_train(train)
