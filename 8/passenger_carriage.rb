@@ -11,7 +11,7 @@ class PassengerCarriage < Carriage
   end
 
   def take_a_seat
-    if valid?
+    return unless valid?
       @taken_seats += 1
       @free_seats -= 1
     end

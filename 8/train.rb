@@ -120,7 +120,7 @@ class Train
   end
 
   def validate!
-    raise "Speed can't be less than zero!" if @speed < 0
+    raise "Speed can't be less than zero!" if @speed.negative? 
     raise "You can't create train without any carriage!" if @carriages.nil?
 
     true
