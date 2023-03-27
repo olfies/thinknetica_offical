@@ -1,10 +1,10 @@
 # frozen_string_literal: false
 
-require_relative 'wagon.rb'
-class PassengerWagon < Wagon
+require_relative 'carriage'
+class PassengerCarriage < Carriage
   attr_accessor :type
 
-  def initialize(_num)
+  def initialize
     @type = :passenger
   end
 end

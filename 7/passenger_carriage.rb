@@ -2,21 +2,11 @@
 
 require_relative 'carriage'
 class PassengerCarriage < Carriage
-  attr_accessor :type, :seats
-  attr_reader   :taken_seats, :free_seats
+  attr_accessor :type
 
-  def initialize(seats)
-    @seats = seats
-    @taken_seats = 0
-    @free_seats = @seats
+  def initialize
+    @type = :passenger
     validate!
-  end
-
-  def take_a_seat
-    return unless valid?
-
-    @taken_seats += 1
-    @free_seats -= 1
   end
 
   protected

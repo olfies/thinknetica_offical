@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
-require_relative 'wagon.rb'
-class CargoWagon < Wagon
+require_relative 'carriage.rb'
+class CargoCarriage < Carriage
   attr_accessor :type
 
   def initialize

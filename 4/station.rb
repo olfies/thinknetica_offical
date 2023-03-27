@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 class Station
   attr_reader :train, :name
 
@@ -11,7 +13,7 @@ class Station
   end
 
   def trains_by_type(type)
-    @trains.select { |trains| train.type == type }
+    @trains.select { |_trains| train.type == type }
   end
 
   def delete(train)
@@ -32,6 +34,7 @@ class Route
 
   def delete_mid(station)
     return if [@stations.first, @stations.last].include?(station)
+
     @stations.delete(station)
   end
 
@@ -43,7 +46,7 @@ end
 class Train
   attr_reader :number, :type, :wagons, :initial_speed, :initial_station, :route
 
-  def initialize(nuber, type, wagons)
+  def initialize(_nuber, type, wagons)
     @nuber = number
     @type = type
     @wagons = wagons
@@ -73,12 +76,13 @@ class Train
   end
 
   def move_forward
-   @current_station_index += 1
-   @initial_station.arrive(self)
+    @current_station_index += 1
+    @initial_station.arrive(self)
   end
 
   def move_between
     return unless @route && prev_station
+
     current_station.depart(self)
     @station_index -= 1
     current_station.arrive(self)
@@ -91,11 +95,13 @@ class Train
   def previous_station
     return unless @route
     return if @station_index < 1
-    @route.route[@station_ind ex - 1]
+
+    @route.route[@station_index - 1]
   end
 
   def next_station
     return unless @route
+
     @route.route[@station_index + 1]
   end
 end

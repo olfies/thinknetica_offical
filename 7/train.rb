@@ -1,8 +1,12 @@
 # frozen_string_literal: false
 
+require 'pry'
+require_relative 'instance_counter.rb'
 require_relative 'cargo_train.rb'
 require_relative 'passenger_train.rb'
 class Train
+  include InstanceCounter
+
   attr_reader :carriage,
               :carriages,
               :speed,
@@ -32,11 +36,6 @@ class Train
 
   def print_speed
     puts speed
-  end
-
-  def each_carriage
-    @carriages.each { |carriage| yield(carriage) } if block_given?
-    self
   end
 
   def add_carriage(carriage)
@@ -128,6 +127,7 @@ class Train
   def validate!
     raise "Speed can't be less than zero!" if @speed.negative?
     raise "You can't create train without any carriage!" if @carriages.nil?
+    raise "You can't create train without a number!" unless @number =~ NUMBER_FORMAT
 
     true
   end

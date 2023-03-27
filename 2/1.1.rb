@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 months = {
   January: 31,
   February: 28,

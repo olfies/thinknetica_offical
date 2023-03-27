@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require_relative 'train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
@@ -32,24 +34,15 @@ class Main
 
   def run_action(action)
     case action.to_i
-    when 1
-      create_station
-    when 2
-      list_all_stations
-    when 3
-      create_route
-    when 4
-      edit_route
-    when 5
-      assign_route_to_train
-    when 6
-      create_train
-    when 7
-      edit_train_wagons
-    when 8
-      move_train
-    when 9
-      show_all_trains_on_station
+    when 1 then create_station
+    when 2 then list_all_stations
+    when 3 then create_route
+    when 4 then edit_route
+    when 5 then assign_route_to_train
+    when 6 then create_train
+    when 7 then edit_train_wagons
+    when 8 then move_train
+    when 9 then show_all_trains_on_station
     when 10
       puts 'Good bye!'
       :exit
@@ -97,7 +90,7 @@ class Main
     puts "Train #{train_number} was created. See all available: #{@trains.join(', ')}"
   end
 
-  def edit_train_wagons
+  def edit_train_wagon
     if @trains.empty?
       puts 'There are no trains yet.'
       return

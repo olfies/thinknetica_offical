@@ -14,17 +14,15 @@ class Route
   end
 
   def delete_station(station)
-    if Array # include?
-      puts 'Это конечная станция, ее нельзя удалять!'
-    else
-      list_stations.delete(station)
-      puts "Из маршрута была удалена станция #{station}"
-    end
+    retrun puts '..' if last_station?
+
+    list_stations.delete(station)
+    puts "Из маршрута была удалена станция #{station}"
   end
 
   def print_all_stations
     puts list_stations
-  end\
+  end
 
   private
 

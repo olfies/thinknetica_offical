@@ -1,15 +1,19 @@
 # frozen_string_literal: false
 
+require 'pry'
+require_relative 'instance_counter.rb'
 require_relative 'cargo_train.rb'
 require_relative 'passenger_train.rb'
 class Train
-  attr_reader :carriage,
+  include InstanceCounter
+
+  attr_reader :num,
+              :type,
+              :carriage,
               :carriages,
               :speed,
               :current_station,
               :route
-  validate :type
-  validate :number
 
   @trains = []
 
@@ -21,9 +25,11 @@ class Train
     @speed = 0
     @route = []
     @trains << self
-    validate_new_train!
-    self.class.trains[num] = self
-    validate!
+    register_instance
+  end
+
+  def accelerate(speed)
+    @speed += speed
   end
 
   def stop
@@ -32,11 +38,6 @@ class Train
 
   def print_speed
     puts speed
-  end
-
-  def each_carriage
-    @carriages.each { |carriage| yield(carriage) } if block_given?
-    self
   end
 
   def add_carriage(carriage)
@@ -115,26 +116,5 @@ class Train
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
 
     [prev_station]
-  end
-
-  def valid_route?(route)
-    route.instance_of?(Route)
-  end
-
-  def valid_carriage?(carriage)
-    carriage.is_a?(Carriage)
-  end
-
-  def validate!
-    raise "Speed can't be less than zero!" if @speed.negative?
-    raise "You can't create train without any carriage!" if @carriages.nil?
-
-    true
-  end
-
-  def valid?
-    validate!
-  rescue StandardError
-    false
   end
 end

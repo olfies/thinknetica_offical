@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 class Station
   @all = []
@@ -11,13 +11,11 @@ class Station
   def initialize(name)
     @all.push(self)
     @name = name
-    @trains = []
+    @trains = {
+      cargo: [],
+      passenger: []
+    }
     validate!
-  end
-
-  def each_train
-    @trains.each { |train| yield(train) } if block_given?
-    self
   end
 
   def add_train(train)
@@ -41,8 +39,8 @@ class Station
     end
   end
 
-  class << self
-    attr_reader :all
+  def self.all
+    @@all
   end
 
   private
