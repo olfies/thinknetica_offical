@@ -11,7 +11,6 @@ module Accessors
         history_method = "@#{method}_history"
         define_method(method) {instance_variable_get(name_method)}
         define_method("#{method}_history") {instance_variable_get(history_method)}
-
         define_method("#{method}=") do |value|
           if instance_variable_get(history_method).nil?
             instance_variable_set(history_method, [instance_variable_get(name_method)])
