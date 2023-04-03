@@ -4,6 +4,7 @@ require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'carriage.rb'
 require_relative 'cargo_carriage.rb'
+require_relative 'train.rb'
 require_relative 'passenger_carriage.rb'
 class Controller
   attr_accessor :stations,
@@ -11,7 +12,7 @@ class Controller
 
   def initialize
     @stations = []
-    @trains = []
+    @trains = [ ]
   end
 
   def run
@@ -42,10 +43,7 @@ class Controller
     type = gets.chomp.to_sym
     puts 'Укажите номер поезда'
     num = gets.chomp
-
-    train_class = train[type]
-    if train_class
-      @trains.push(train_class.new(num))
+    if num.to_i
       puts "Создан поезд типа #{type} номер #{num}"
     else
       puts 'Такого типа поезда нет'
@@ -71,9 +69,8 @@ class Controller
 
   def delete_carriage
     puts 'Укажите номер поезда'
-    all_trains
     num = gets.chomp
-    @trains.carriage.delete(num)
+    @trains.delete(num)
   end
 
   def add_train_to_station
@@ -81,9 +78,7 @@ class Controller
     puts all_stations
     num_station = gets.chomp.to_i
     puts 'Укажите номер поезда'
-    all_trains
     num_tr = gets.chomp.to_i
-    @stations[num_station].add_train(trains[num_tr])
     puts "На станцию #{num_station} Прибыл поезд #{trains[num_tr]}"
   end
 
@@ -96,7 +91,6 @@ class Controller
     puts all_stations
     ation = gets.chomp.to_i
     selected_station = @stations[ation]
-    station = selected_station
     puts " На станции #{station.name} находятся поезда: "
     trains = train
     puts train

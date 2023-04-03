@@ -1,15 +1,12 @@
 # frozen_string_literal: false
 
-require_relative 'cargo_train.rb'
-require_relative 'passenger_train.rb'
+
 class Train
   attr_reader :carriage,
               :carriages,
               :speed,
               :current_station,
               :route
-  validate :type
-  validate :number
 
   @trains = []
 

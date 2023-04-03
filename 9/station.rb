@@ -9,7 +9,6 @@ class Station
                 :passenger_train
 
   def initialize(name)
-    @all.push(self)
     @name = name
     @trains = []
     validate!
