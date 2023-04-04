@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-
 class Train
   attr_reader :carriage,
               :carriages,
@@ -20,7 +19,6 @@ class Train
     @trains << self
     validate_new_train!
     self.class.trains[num] = self
-    validate!
   end
 
   def stop
@@ -112,26 +110,5 @@ class Train
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
 
     [prev_station]
-  end
-
-  def valid_route?(route)
-    route.instance_of?(Route)
-  end
-
-  def valid_carriage?(carriage)
-    carriage.is_a?(Carriage)
-  end
-
-  def validate!
-    raise "Speed can't be less than zero!" if @speed.negative?
-    raise "You can't create train without any carriage!" if @carriages.nil?
-
-    true
-  end
-
-  def valid?
-    validate!
-  rescue StandardError
-    false
   end
 end

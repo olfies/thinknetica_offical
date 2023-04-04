@@ -2,75 +2,69 @@
 
 require_relative 'station.rb'
 require_relative 'route.rb'
-require_relative 'carriage.rb'
-require_relative 'cargo_carriage.rb'
 require_relative 'train.rb'
+require_relative 'carriage.rb'
 require_relative 'passenger_carriage.rb'
-class Controller
-  attr_accessor :stations,
-                :trains
+require_relative 'menu.rb'
+require_relative 'train.rb'
+
+class Main
+  def select_actions_menu
+    puts <<-HEREDOC
+          Select action from menu:
+            (1)New station
+            (2)New train
+            (3)Add carriage
+            (4)Delete carriage
+            (5)Add train to statios
+            (6)All stations
+            (7)List trains to stations
+            (8)Exit
+    HEREDOC
+    run_action(gets.chomp)
+  end
+
+  def run_action(action)
+    case action.to_i
+    when 1 then new_station
+    when 2 then new_train
+    when 3 then add_carriage
+    when 4 then delete_carriage
+    when 5 then add_train_to_station
+    when 6 then all_stations
+    when 7 then list_trains_to_station
+    when 8 then
+      puts 'Good bye!'
+      :exit
+    else
+      select_actions_menu
+    end
+  end
 
   def initialize
     @stations = []
-    @trains = [ ]
+    @routes = []
+    @trains = []
   end
 
-  def run
-    puts 'Что вы хотите сделать?'
-    action = gets.chomp
-    case action
-    when '1' then new_station
-    when '2' then new_train
-    when '3' then add_carriage
-    when '4' then delete_carriage
-    when '5' then add_train_to_station
-    when '6' then all_stations
-    when '7' then list_trains_to_station
-    when '8' then exit
-    end
+  def run_main
+    run_action(select_actions_menu) while select_actions_menu != :exit
   end
+
+  private
 
   def new_station
     puts 'Укажите имя станции:'
     name = gets.chomp
-    station = Station.new(name)
-    @stations.push(station)
     puts "Создана станция #{name}"
   end
 
-  def new_train
-    puts 'Укажите тип поезда (cargo или passenger)'
-    type = gets.chomp.to_sym
-    puts 'Укажите номер поезда'
-    num = gets.chomp
-    if num.to_i
-      puts "Создан поезд типа #{type} номер #{num}"
-    else
-      puts 'Такого типа поезда нет'
-    end
-  end
-
-  def all_trains
-    @trains.each_with_index { |train, n| puts "#{n} #{train.num}" }
-  end
-
   def add_carriage
-    puts 'Укажите номер поезда'
-    all_trains
-    num = gets.chomp.to_i
-    carriage_type = Carriage[@trains[num].type]
-    if carriage_type
-      @trains[num].carriages.push(carriage_type.new)
-      puts "Этот поезд типа #{@trains[num].type}, к нему будет добавлен вагон типа #{carriage_type}"
-    else
-      puts 'Такого поезда нет'
-    end
-  end
-
-  def delete_carriage
-    puts 'Укажите номер поезда'
-    num = gets.chomp
-    @trains.delete(num)
+    puts 'Укажите объем вагона'
+    capacity = gets.chomp.to_i
+    puts 'Укажите количество мест в вагоне'
+    capac = gets.chomp.to_i
+    puts "Создан вагон обьемом #{capacity} и с #{capac} местами"
   end
 
   def add_train_to_station
@@ -98,99 +92,20 @@ class Controller
     station.train_in(trains)
   end
 
-  def list_carriages_to_train
-    raise 'Список поездов пуст, создайте поезд!' if @train.nil?
-
+  def delete_carriage
     puts 'Укажите номер поезда'
-    all_trains
-    num = gets.chomp.to_i
-    selected_train = all_trains[num]
-    train = selected_train
-    n = 1
-    train.carriages_in do |carriage|
-      if train.type == :cargo
-        puts " №#{n} Тип вагона: cargo"
-        puts "Занято объема: #{carriage.volume}"
-        puts "Осталось свободного объема: #{carriage.free_capacity}"
-      else
-        puts " №#{n} Тип вагона: passenger"
-        puts "Занято мест: #{carriage.seats}"
-        puts "Осталось мест: #{carriage.free_capacity}"
-      end
-      n += 1
-    end
+    num = gets.chomp
+    @trains.carriage.delete(num)
   end
 
-  def load_carriage
-    choice_loading_carriage
-    puts 'Укажите поезд:'
-    all_trains
-    num_train = gets.chomp.to_i
-    selected_train = all_trains[num_train]
-    train = selected_train
-    puts 'Укажите вагон'
-    n = 1
-    train.carriages_in do |carriage|
-      if train.type == :cargo
-        puts " №#{n} Тип вагона:cargo, занято: #{carriage.volume}"
-        puts "Осталось свободного объема: #{carriage.free_capacity}"
-      else
-        puts " №#{n} Тип:passenger, занято: #{carriage.seats}"
-        puts "Осталось мест: #{carriage.free_capacity}"
-      end
-      n += 1
-    end
-    num_carriage = gets.chomp.to_i
-    selected_carriage = train.carriages[num_carriage - 1]
-
-    puts "Вагон: #{selected_carriage}"
-    if train.type == :cargo
-      puts 'Укажите объем'
-      volume = gets.chomp.to_i
-      [volume]
-    else
-      puts 'Укажите количестко мест'
-      value = gets.chomp.to_i
-      [value]
-    end
-  end
-
-  def create_station!(name)
-    station = Station.new(name)
-    @stations.push(station)
-    puts "Создана станция #{name}"
-  end
-
-  def create_train!(type, num)
-    train_class = train[type]
-    if train_class
-      @trains.push(train_class.new(num))
-      puts "Создан поезд типа #{type} номер #{num}"
-    else
-      puts 'Такого типа поезда нет'
-    end
-  end
-
-  def select_train
-    raise 'Список поездов пуст, создайте поезд!' if @train.nil?
-
+  def new_train
+    puts 'Укажите тип поезда (cargo или passenger)'
+    type = gets.chomp.to_sym
     puts 'Укажите номер поезда'
-    all_trains
-    num = gets.chomp.to_i
-    selected_train = all_trains[num]
-    selected_train
-  end
-
-  def selected_station
-    raise 'Список станций пуст, создайте станцию!' if @stations.nil?
-
-    puts 'Выберите номер станции'
-    puts all_stations
-    num = gets.chomp.to_i
-    selected_station = @stations[num]
-    selected_station
+    num = gets.chomp
+    create_train!(type, num)
   end
 end
 
-controller = Controller.new
-controller.run
+main = Main.new
+main.run_main

@@ -11,7 +11,6 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    validate!
   end
 
   def each_train
@@ -42,23 +41,5 @@ class Station
 
   class << self
     attr_reader :all
-  end
-
-  private
-
-  def valid_train?(train)
-    train.is_a?(Train)
-  end
-
-  def validate!
-    raise "You can't create station without the name!" if @name.nil?
-
-    true
-  end
-
-  def valid?
-    validate!
-  rescue StandardError
-    false
   end
 end
