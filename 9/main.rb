@@ -105,7 +105,7 @@ class Main
   end
 
   def new_wagon
-    puts 'Select wagon type to create: cargo(1) passenger (2): '
+    puts 'Выберите тип вагона: cargo(1) passenger (2): '
     action = gets.to_i
     case action
     when 1
