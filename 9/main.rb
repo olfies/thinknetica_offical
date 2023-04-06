@@ -1,5 +1,6 @@
 # frozen_string_literal: false
 
+require_relative 'cargo_carriage.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'train.rb'
@@ -14,7 +15,7 @@ class Main
           Select action from menu:
             (1)New station
             (2)New train
-            (3)Add carriage
+            (3)New wagon
             (4)Delete carriage
             (5)Add train to statios
             (6)All stations
@@ -28,7 +29,7 @@ class Main
     case action.to_i
     when 1 then new_station
     when 2 then new_train
-    when 3 then add_carriage
+    when 3 then new_wagon
     when 4 then delete_carriage
     when 5 then add_train_to_station
     when 6 then all_stations
@@ -54,48 +55,13 @@ class Main
   private
 
   def new_station
-    puts 'Укажите имя станции:'
-    name = gets.chomp
-    puts "Создана станция #{name}"
-  end
-
-  def add_carriage
-    puts 'Укажите объем вагона'
-    capacity = gets.chomp.to_i
-    puts 'Укажите количество мест в вагоне'
-    capac = gets.chomp.to_i
-    puts "Создан вагон обьемом #{capacity} и с #{capac} местами"
-  end
-
-  def add_train_to_station
-    puts 'Выберите номер станции к которой хотите добавить поезд'
-    puts all_stations
-    num_station = gets.chomp.to_i
-    puts 'Укажите номер поезда'
-    num_tr = gets.chomp.to_i
-    puts "На станцию #{num_station} Прибыл поезд #{trains[num_tr]}"
-  end
-
-  def all_stations
-    @stations.each_with_index { |station, n| puts " #{n} #{station.name}" }
-  end
-
-  def list_trains_to_station
-    puts 'Выберите номер станции'
-    puts all_stations
-    ation = gets.chomp.to_i
-    selected_station = @stations[ation]
-    puts " На станции #{station.name} находятся поезда: "
-    trains = train
-    puts train
-    puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
-    station.train_in(trains)
-  end
-
-  def delete_carriage
-    puts 'Укажите номер поезда'
-    num = gets.chomp
-    @trains.carriage.delete(num)
+    puts 'Пожалуйста, укажите название станции (возможные буквы и цифры):'
+    station_name = gets.chomp
+    @stations << Station.new(station_name)
+    puts "Станиця '#{station_name}' создана. Все станции: #{@stations.join(',')} "
+  rescue StandardError => e
+    puts e.message
+    retry
   end
 
   def new_train
@@ -103,8 +69,57 @@ class Main
     type = gets.chomp.to_sym
     puts 'Укажите номер поезда'
     num = gets.chomp
-    create_train!(type, num)
+    if num.to_i
+      puts "Создан поезд типа #{type} номер #{num}"
+    else
+      puts 'Такого типа поезда нет'
+    end
   end
+
+  def all_stations
+    @stations.each_with_index { |station, n| puts " #{n} #{station.name}" }
+  end
+
+  def add_train_to_station
+    puts 'Выберите номер станции к которой хотите добавить поезд'
+    num_station = gets.chomp.to_i
+    puts 'Укажите номер поезда'
+    num_train = gets.chomp.to_i
+    puts "На станцию #{num_station} Прибыл поезд #{num_train}"
+  end
+
+  def list_trains_to_station
+    puts "Напишите имя станции"
+    name = gets.chomp
+    puts " На станции #{name} находятся поезда: "
+    trains = lambda do |train|
+      puts train
+      puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
+    end
+
+  def delete_carriage
+    puts 'Укажите номер поезда'
+    num = gets.chomp
+    @trains.delete(num)
+    puts "Поезд под номером #{num} удален "
+  end
+
+  def new_wagon
+    puts 'Select wagon type to create: cargo(1) passenger (2): '
+    action = gets.to_i
+    case action
+    when 1
+      CargoCarriage.new
+      puts "Вагон типа Cargo создан"
+    when 2
+      PassengerCarriage.new
+      puts "Вагон типа Passenger создан"
+    else
+    puts "Попробуете еще раз"
+    end
+  end
+end
+
 end
 
 main = Main.new

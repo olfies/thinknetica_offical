@@ -4,7 +4,7 @@ class CargoCarriage
   attr_accessor :volume, :type
   attr_reader   :taken_volume, :free_volume
 
-  def initialize(volume)
+  def initialize
     @volume = volume
     @type = :cargo
     @taken_volume = 0
@@ -17,3 +17,4 @@ class CargoCarriage
     @taken_volume += volume
     @free_volume -= volume
   end
+end
