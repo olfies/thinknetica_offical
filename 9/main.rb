@@ -65,15 +65,15 @@ class Main
   end
 
   def new_train
-    puts 'Укажите тип поезда (cargo или passenger)'
-    type = gets.chomp.to_sym
-    puts 'Укажите номер поезда'
-    num = gets.chomp
-    if num.to_i
-      puts "Создан поезд типа #{type} номер #{num}"
-    else
-      puts 'Такого типа поезда нет'
-    end
+    type = nil
+    until type == 1 || type == 2  do
+      puts 'Введите число и нажмите Enter:'
+      puts '1 – Создать поезд тип:cargo'
+      puts '2 – Создать поезд тип:passenger'
+      type = gets.to_i
+  end
+end
+
   end
 
   def all_stations
@@ -120,7 +120,6 @@ class Main
   end
 end
 
-end
 
 main = Main.new
 main.run_main
