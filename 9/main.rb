@@ -77,9 +77,9 @@ def create_train_selection
 end
 
 def create_train(type, train_number)
-  @trains << CargoCarriage.new(train_number) if type == 1
+  @trains << CargoCarriage.new if type == 1
   @trains << PassengerCarriage.new(train_number) if type == 2
-  unless type == 1 ||  type == 2 
+  unless type == 1 ||  type == 2
     raise 'Type of train was entered incorrect! Please enter 1 or 2.'
   end
   puts "Train #{train_number} was created."
