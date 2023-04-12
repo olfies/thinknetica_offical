@@ -8,14 +8,15 @@ require_relative 'carriage.rb'
 require_relative 'passenger_carriage.rb'
 require_relative 'menu.rb'
 require_relative 'train.rb'
+require 'pry'
 
 class Main
   def select_actions_menu
     puts <<-HEREDOC
           Select action from menu:
             (1)New station
-            (2)New train
-            (3)New wagon
+            (2)Create train selection
+            (3)New carriage
             (4)Delete carriage
             (5)Add train to statios
             (6)All stations
@@ -28,8 +29,8 @@ class Main
   def run_action(action)
     case action.to_i
     when 1 then new_station
-    when 2 then new_train
-    when 3 then new_wagon
+    when 2 then create_train_selection
+    when 3 then new_carriage
     when 4 then delete_carriage
     when 5 then add_train_to_station
     when 6 then all_stations
@@ -54,6 +55,8 @@ class Main
 
   private
 
+  attr_reader :type
+
   def new_station
     puts 'Пожалуйста, укажите название станции (возможные буквы и цифры):'
     station_name = gets.chomp
@@ -63,39 +66,47 @@ class Main
     puts e.message
     retry
   end
-
-  def new_train
-    type = nil
-    until type == 1 || type == 2  do
-      puts 'Введите число и нажмите Enter:'
-      puts '1 – Создать поезд тип:cargo'
-      puts '2 – Создать поезд тип:passenger'
-      type = gets.to_i
-  end
 end
 
-  end
+def create_train_selection
+  puts 'Provide new train number in format NNN-NN or NNNNN (N - number or letter): '
+  train_number = gets.chomp
+  puts 'Select cargo (1) or passenger(2) train: '
+  type = gets.chomp.to_i
+  create_train(type, train_number)
+end
 
-  def all_stations
-    @stations.each_with_index { |station, n| puts " #{n} #{station.name}" }
+def create_train(type, train_number)
+  @trains << CargoCarriage.new(train_number) if type == 1
+  @trains << PassengerCarriage.new(train_number) if type == 2
+  unless type == 1 ||  type == 2 
+    raise 'Type of train was entered incorrect! Please enter 1 or 2.'
   end
+  puts "Train #{train_number} was created."
+rescue StandardError => e
+  puts e.message
+end
 
-  def add_train_to_station
-    puts 'Выберите номер станции к которой хотите добавить поезд'
-    num_station = gets.chomp.to_i
-    puts 'Укажите номер поезда'
-    num_train = gets.chomp.to_i
-    puts "На станцию #{num_station} Прибыл поезд #{num_train}"
+def all_stations
+  @stations.each_with_index { |station, n| puts " #{n} #{station.name}" }
+end
+
+def add_train_to_station
+  puts 'Выберите номер станции к которой хотите добавить поезд'
+  num_station = gets.chomp.to_i
+  puts 'Укажите номер поезда'
+  num_train = gets.chomp.to_i
+  puts "На станцию #{num_station} Прибыл поезд #{num_train}"
+end
+
+def list_trains_to_station
+  puts 'Напишите имя станции'
+  name = gets.chomp
+  puts " На станции #{name} находятся поезда: "
+  trains = lambda do |train|
+    puts train
+    puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
   end
-
-  def list_trains_to_station
-    puts "Напишите имя станции"
-    name = gets.chomp
-    puts " На станции #{name} находятся поезда: "
-    trains = lambda do |train|
-      puts train
-      puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
-    end
 
   def delete_carriage
     puts 'Укажите номер поезда'
@@ -104,22 +115,21 @@ end
     puts "Поезд под номером #{num} удален "
   end
 
-  def new_wagon
+  def new_carriage
     puts 'Выберите тип вагона: cargo(1) passenger (2): '
     action = gets.to_i
     case action
     when 1
       CargoCarriage.new
-      puts "Вагон типа Cargo создан"
+      puts 'Вагон типа Cargo создан'
     when 2
       PassengerCarriage.new
-      puts "Вагон типа Passenger создан"
+      puts 'Вагон типа Passenger создан'
     else
-    puts "Попробуете еще раз"
+      puts 'Попробуете еще раз'
     end
   end
 end
-
 
 main = Main.new
 main.run_main

@@ -5,20 +5,20 @@ class Train
               :carriages,
               :speed,
               :current_station,
-              :route
+              :route,
+              :type
 
   @trains = []
 
-  def initialize(num)
+  def initialize(num, type)
     @num = num
+    @train_number = []
     @type = type
     @carriage = 0
     @carriages = []
     @speed = 0
     @route = []
     @trains << self
-    validate_new_train!
-    self.class.trains[num] = self
   end
 
   def stop
