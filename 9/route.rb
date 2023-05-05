@@ -5,7 +5,6 @@ class Route
 
   def initialize(first, last)
     @list_stations = [first, last]
-    validate!
   end
 
   def add_station(station)
@@ -24,23 +23,5 @@ class Route
 
   def print_all_stations
     puts list_stations
-  end\
-
-  private
-
-  def valid_station?(station)
-    station.instance_of?(Station)
-  end
-
-  def validate!
-    raise "You can't create route without any station" if @stations.compact!.any?
-
-    true
-  end
-
-  def valid?
-    validate!
-  rescue StandardError
-    false
   end
 end

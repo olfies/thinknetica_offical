@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 class CargoCarriage < Carriage
   attr_accessor :volume, :type
   attr_reader   :taken_volume, :free_volume
@@ -11,10 +13,10 @@ class CargoCarriage < Carriage
   end
 
   def take_volume(volume)
-    if free_volume?(volume)
-      @taken_volume += volume
-      @free_volume -= volume
-    end
+    return unless free_volume?(volume)
+
+    @taken_volume += volume
+    @free_volume -= volume
   end
 
   protected
@@ -32,7 +34,7 @@ class CargoCarriage < Carriage
     false
   end
 
-  def has_free_volume?(volume)
+  def free_volume?(volume)
     raise "You can't take so much volume (free_volume = #{@free_volume})!" if (@free_volume - volume).negative?
 
     true

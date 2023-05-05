@@ -1,44 +1,24 @@
-
 # frozen_string_literal: false
 
-
-require 'pry'
-require_relative 'instance_counter.rb'
-require_relative 'cargo_train.rb'
-require_relative 'passenger_train.rb'
 class Train
-  include InstanceCounter
-
-  attr_reader :num,
-              :type,
-              :carriage,
+  attr_reader :carriage,
               :carriages,
               :speed,
               :current_station,
-              :route
+              :route,
+              :type
 
+  @trains = []
 
-
-  @@trains = []
-
-
-  def initialize(num)
+  def initialize(num, type)
     @num = num
+    @train_number = []
     @type = type
     @carriage = 0
     @carriages = []
     @speed = 0
     @route = []
-
     @trains << self
-
-    @@trains << self
-
-    register_instance
-  end
-
-  def accelerate(speed)
-    @speed += speed
   end
 
   def stop
@@ -47,6 +27,11 @@ class Train
 
   def print_speed
     puts speed
+  end
+
+  def each_carriage
+    @carriages.each { |carriage| yield(carriage) } if block_given?
+    self
   end
 
   def add_carriage(carriage)
@@ -67,6 +52,16 @@ class Train
       @carriages.delete(carriage)
       puts "Удален вагон, в составе осталось #{carriages.size} вагона"
     end
+  end
+
+  def run_next_station
+    return if run_next_station.nil?
+
+    current_station.remove_train(self)
+
+    @current_station += 1
+
+    current_station.add_train(self)
   end
 
   def accept_route(route)
@@ -113,23 +108,76 @@ class Train
     @trains.find { |train| train.num == num }
   end
 
+  def speed_up(_speed_delta)
+    @speed += speed
+  end
+
+  def brake_train
+    @speed = 0
+  end
+
+  def relevant_wagon?(wagon)
+    wagon.type == @type
+  end
+
+  def add_wagon(wagon)
+    @wagons << wagon if @speed.zero? && relevant_wagon?(wagon)
+  end
+
+  def remove_wagon(wagon)
+    return if @speed.nonzero?
+
+    @wagons.delete(wagon)
+  end
+
+  def route=(route)
+    @route = route
+    @current_station = @route.list_stations.first
+  end
+
+  def next_station
+    @route.stations[@current_station + 1]
+  end
+
+  def previous_station
+    @route.stations[@current_station - 1] if @current_station.zero?
+  end
+
+  def current_station
+    @route.stations[@current_station]
+  end
+
+  def run_next_station
+    return if next_station.nil?
+
+    current_station.remove_train(self)
+
+    @current_station += 1
+
+    current_station.add_train(self)
+  end
+
+  def run_previous_station
+    return if get_previous_station.nil?
+
+    current_station.remove_train(self)
+
+    @current_station -= 1
+
+    current_station.add_train(self)
+  end
+
   private
 
   def next_station
     next_station = @route.list_stations[@route.list_stations.index(@current_station) + 1]
 
-
     [next_station]
-
-
   end
 
   def prev_station
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
 
-
     [prev_station]
-
-
   end
 end

@@ -1,3 +1,4 @@
+
 module InstanceCounter
   attr_reader :instances
 

@@ -1,3 +1,4 @@
+
 require_relative 'carriage.rb'
 class CargoCarriage < Carriage
   attr_accessor :type
@@ -12,11 +13,27 @@ class CargoCarriage < Carriage
   def validate!
     raise "You can't create a carriage without volume!" if @volume.nil?
     raise "You can't create a carriage with zero volume!" if @volume <= 0
+
+
+
+
     true
   end
 
   def valid?
     validate!
+
+  rescue StandardError
+    false
+  end
+
+  def free_volume?(volume)
+    raise "You can't take so much volume (free_volume = #{@free_volume})!" if (@free_volume - volume).negative?
+
+    true
+  end
+end
+
   rescue
     false
   end
@@ -27,4 +44,5 @@ class CargoCarriage < Carriage
   end
 
 end
+
 

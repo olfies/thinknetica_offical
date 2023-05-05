@@ -1,3 +1,4 @@
+
 require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'train.rb'
@@ -17,6 +18,14 @@ class Controller
     puts 'Что вы хотите сделать?'
     action = gets.chomp
     case action
+    when '1' then new_station
+    when '2' then new_train
+    when '3' then add_carriage
+    when '4' then delete_carriage
+    when '5' then add_train_to_station
+    when '6' then all_stations
+    when '7' then list_trains_to_station
+    when '8' then exit
     when '1'
       new_station
     when '2'
@@ -57,6 +66,7 @@ class Controller
     else
       puts 'Такого типа поезда нет'
     end
+  end
    end
 
   def all_trains

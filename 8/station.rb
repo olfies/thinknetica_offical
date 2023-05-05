@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Station
-  @@all = []
+  @all = []
 
   attr_accessor :name,
                 :trains,
@@ -9,7 +9,7 @@ class Station
                 :passenger_train
 
   def initialize(name)
-    @@all.push(self)
+    @all.push(self)
     @name = name
     @trains = []
     validate!
@@ -41,8 +41,8 @@ class Station
     end
   end
 
-  def self.all
-    @@all
+  class << self
+    attr_reader :all
   end
 
   private

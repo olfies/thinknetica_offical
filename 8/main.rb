@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'carriage.rb'
@@ -77,12 +79,12 @@ class Controller
   def add_train_to_station
     puts 'Выберите номер станции к которой хотите добавить поезд'
     puts all_stations
-    num_station  = gets.chomp.to_i
+    num_station = gets.chomp.to_i
     puts 'Укажите номер поезда'
     all_trains
     num_tr = gets.chomp.to_i
-    @stations[num_station ].add_train(trains[num_tr])
-    puts "На станцию #{num_station } Прибыл поезд #{trains[num_tr]}"
+    @stations[num_station].add_train(trains[num_tr])
+    puts "На станцию #{num_station} Прибыл поезд #{trains[num_tr]}"
   end
 
   def all_stations
@@ -92,26 +94,19 @@ class Controller
   def list_trains_to_station
     puts 'Выберите номер станции'
     puts all_stations
-    num_station  = gets.chomp.to_i
-    puts "На станции #{all_stations[num_station ].name} находятся поезда: "
-    @stations[num_station ].trains.each_with_index { |num, n| puts "#{n} #{num}" }
-  end
-
-  def list_trains_to_station
-    puts 'Выберите номер станции'
-    puts all_stations
-    num_station  = gets.chomp.to_i
-    selected_station = @stations[ation ]
+    ation = gets.chomp.to_i
+    selected_station = @stations[ation]
     station = selected_station
     puts " На станции #{station.name} находятся поезда: "
-    trains = |train|
+    trains = train
     puts train
     puts "№: #{train.num}, тип: #{train.type}, вагонов: #{train.carriages.length} "
     station.train_in(trains)
   end
 
   def list_carriages_to_train
-    raise "Список поездов пуст, создайте поезд!" if @train.nil?
+    raise 'Список поездов пуст, создайте поезд!' if @train.nil?
+
     puts 'Укажите номер поезда'
     all_trains
     num = gets.chomp.to_i
@@ -157,12 +152,12 @@ class Controller
     puts "Вагон: #{selected_carriage}"
     if train.type == :cargo
       puts 'Укажите объем'
-      value = gets.chomp.to_i
-      selected_carriage.load(value)
+      volume = gets.chomp.to_i
+      [volume]
     else
       puts 'Укажите количестко мест'
       value = gets.chomp.to_i
-      selected_carriage.load(value)
+      [value]
     end
   end
 
@@ -183,7 +178,8 @@ class Controller
   end
 
   def select_train
-    fail 'Список поездов пуст, создайте поезд!' if @train.nil?
+    raise 'Список поездов пуст, создайте поезд!' if @train.nil?
+
     puts 'Укажите номер поезда'
     all_trains
     num = gets.chomp.to_i
@@ -191,23 +187,15 @@ class Controller
     selected_train
   end
 
-  def all_trains
-    @trains.each_with_index { |train, n| puts "#{n} #{train.num}" }
-  end
-
   def selected_station
-    fail 'Список станций пуст, создайте станцию!' if @stations.nil?
+    raise 'Список станций пуст, создайте станцию!' if @stations.nil?
+
     puts 'Выберите номер станции'
     puts all_stations
     num = gets.chomp.to_i
     selected_station = @stations[num]
     selected_station
   end
-
-  def all_stations
-    @stations.each_with_index { |station, n| puts " #{n} #{station.name}" }
-  end
-
 end
 
 controller = Controller.new

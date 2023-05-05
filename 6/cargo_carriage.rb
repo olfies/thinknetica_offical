@@ -1,3 +1,4 @@
+
 require_relative 'carriage.rb'
 class CargoCarriage < Carriage
   attr_accessor :type

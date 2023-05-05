@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 puts 'Какое основание у вашего треугольника?'
 base = gets.chomp
 

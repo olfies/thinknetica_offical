@@ -1,3 +1,4 @@
+
 class PassengerTrain < Train
   @trains = {}
 

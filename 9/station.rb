@@ -1,11 +1,7 @@
-
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 class Station
   @all = []
-
-class Station
-  @@all = []
 
   attr_accessor :name,
                 :trains,
@@ -13,17 +9,13 @@ class Station
                 :passenger_train
 
   def initialize(name)
-
-    @all.push(self)
-
-    @@all.push(self)
-
     @name = name
-    @trains = {
-      cargo: [],
-      passenger: []
-    }
-    validate!
+    @trains = []
+  end
+
+  def each_train
+    @trains.each { |train| yield(train) } if block_given?
+    self
   end
 
   def add_train(train)
@@ -47,34 +39,7 @@ class Station
     end
   end
 
-  def self.all
-    @@all
+  class << self
+    attr_reader :all
   end
-
-  private
-
-  def valid_train?(train)
-    train.is_a?(Train)
-  end
-
-  def validate!
-    raise "You can't create station without the name!" if @name.nil?
-
-
-
-
-    true
-  end
-
-  def valid?
-    validate!
-
-  rescue StandardError
-    false
-  end
-
-  rescue
-    false
-  end
-
 end

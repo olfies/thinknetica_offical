@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require_relative 'cargo_train.rb'
 require_relative 'passenger_train.rb'
 class Train
@@ -9,7 +11,7 @@ class Train
   validate :type
   validate :number
 
-  @@trains = []
+  @trains = []
 
   def initialize(num)
     @num = num
@@ -18,7 +20,7 @@ class Train
     @carriages = []
     @speed = 0
     @route = []
-    @@trains << self
+    @trains << self
     validate_new_train!
     self.class.trains[num] = self
     validate!
@@ -105,10 +107,14 @@ class Train
 
   def next_station
     next_station = @route.list_stations[@route.list_stations.index(@current_station) + 1]
+
+    [next_station]
   end
 
   def prev_station
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
+
+    [prev_station]
   end
 
   def valid_route?(route)
@@ -120,7 +126,7 @@ class Train
   end
 
   def validate!
-    raise "Speed can't be less than zero!" if @speed < 0
+    raise "Speed can't be less than zero!" if @speed.negative?
     raise "You can't create train without any carriage!" if @carriages.nil?
 
     true

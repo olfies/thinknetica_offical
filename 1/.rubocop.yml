@@ -1,0 +1,13 @@
+Metrics/MethodLength:
+  Max: 1000
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - a
+    - b
+    - c
+
+Metrics/AbcSize:
+  Max: 54
+
+

@@ -1,3 +1,4 @@
+
 require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'train.rb'
@@ -52,7 +53,7 @@ class Controller
     else
       puts 'Такого типа поезда нет'
     end
-   end
+
 
   def all_trains
     @trains.each_with_index { |train, n| puts "#{n} #{train.num}" }

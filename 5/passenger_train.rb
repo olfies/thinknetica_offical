@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require_relative 'train.rb'
 class PassengerTrain < Train
   @trains = {}

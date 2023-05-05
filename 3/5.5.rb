@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 user_entered = {}
 
 print 'Напишите числом день: '

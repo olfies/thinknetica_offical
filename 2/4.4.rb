@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 vowels = %w[A E I O U Y]
 
 vowels_hash = {}
