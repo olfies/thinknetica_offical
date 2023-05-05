@@ -1,4 +1,7 @@
+
 # frozen_string_literal: false
+
+
 
 class Route
   attr_accessor :list_stations
@@ -14,7 +17,11 @@ class Route
   end
 
   def delete_station(station)
+
     retrun puts '..' if last_station?
+
+    retrun puts '..'if last_station?
+
 
     list_stations.delete(station)
     puts "Из маршрута была удалена станция #{station}"
@@ -38,7 +45,14 @@ class Route
 
   def valid?
     validate!
+
   rescue StandardError
     false
   end
+
+  rescue
+    false
+  end
+
+
 end

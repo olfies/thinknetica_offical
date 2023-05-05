@@ -1,4 +1,3 @@
-# frozen_string_literal: false
 
 require_relative 'station.rb'
 require_relative 'route.rb'
@@ -27,6 +26,22 @@ class Controller
     when '6' then all_stations
     when '7' then list_trains_to_station
     when '8' then exit
+    when '1'
+      new_station
+    when '2'
+      new_train
+    when '3'
+      add_carriage
+    when '4'
+      delete_carriage
+    when '5'
+      add_train_to_station
+    when '6'
+      all_stations
+    when '7'
+      list_trains_to_station
+    when '8'
+      exit
     end
   end
 
@@ -52,6 +67,7 @@ class Controller
       puts 'Такого типа поезда нет'
     end
   end
+   end
 
   def all_trains
     @trains.each_with_index { |train, n| puts "#{n} #{train.num}" }

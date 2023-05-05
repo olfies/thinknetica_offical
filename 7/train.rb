@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+
 
 require 'pry'
 require_relative 'instance_counter.rb'
@@ -11,11 +11,17 @@ class Train
               :carriages,
               :speed,
               :current_station,
-              :route
+
   validate :type
   validate :number
 
   @trains = []
+
+    validate :type
+    validate :number
+
+  @@trains = []
+
 
   def initialize(num)
     @num = num
@@ -24,7 +30,11 @@ class Train
     @carriages = []
     @speed = 0
     @route = []
+
     @trains << self
+
+    @@trains << self
+
     validate_new_train!
     self.class.trains[num] = self
     validate!
@@ -108,12 +118,18 @@ class Train
     next_station = @route.list_stations[@route.list_stations.index(@current_station) + 1]
 
     [next_station]
+
+
   end
 
   def prev_station
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
 
+
     [prev_station]
+  end
+
+
   end
 
   def valid_route?(route)
@@ -124,17 +140,28 @@ class Train
     carriage.is_a?(Carriage)
   end
 
-  def validate!
+
     raise "Speed can't be less than zero!" if @speed.negative?
     raise "You can't create train without any carriage!" if @carriages.nil?
     raise "You can't create train without a number!" unless @number =~ NUMBER_FORMAT
+
+    raise "Speed can't be less than zero!" if @speed < 0
+    raise "You can't create train without any carriage!" if @carriages.nil?
+    raise "You can't create train without a number!" if !(@number =~ NUMBER_FORMAT)
 
     true
   end
 
   def valid?
     validate!
+
   rescue StandardError
     false
   end
+
+  rescue
+    false
+  end
+
+
 end

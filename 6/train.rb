@@ -1,4 +1,6 @@
+
 # frozen_string_literal: false
+
 
 require 'pry'
 require_relative 'instance_counter.rb'
@@ -15,7 +17,10 @@ class Train
               :current_station,
               :route
 
-  @trains = []
+
+
+  @@trains = []
+
 
   def initialize(num)
     @num = num
@@ -24,7 +29,11 @@ class Train
     @carriages = []
     @speed = 0
     @route = []
+
     @trains << self
+
+    @@trains << self
+
     register_instance
   end
 
@@ -109,12 +118,18 @@ class Train
   def next_station
     next_station = @route.list_stations[@route.list_stations.index(@current_station) + 1]
 
+
     [next_station]
+
+
   end
 
   def prev_station
     prev_station = @route.list_stations[@route.list_stations.index(@current_station) - 1]
 
+
     [prev_station]
+
+
   end
 end

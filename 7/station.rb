@@ -1,7 +1,11 @@
+
 # frozen_string_literal: false
 
 class Station
   @all = []
+
+class Station
+  @@all = []
 
   attr_accessor :name,
                 :trains,
@@ -9,7 +13,11 @@ class Station
                 :passenger_train
 
   def initialize(name)
+
     @all.push(self)
+
+    @@all.push(self)
+
     @name = name
     @trains = {
       cargo: [],
@@ -52,12 +60,21 @@ class Station
   def validate!
     raise "You can't create station without the name!" if @name.nil?
 
+
+
+
     true
   end
 
   def valid?
     validate!
+
   rescue StandardError
     false
   end
+
+  rescue
+    false
+  end
+
 end

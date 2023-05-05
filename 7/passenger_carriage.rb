@@ -1,3 +1,4 @@
+
 # frozen_string_literal: false
 
 require_relative 'carriage'
@@ -21,7 +22,13 @@ class PassengerCarriage < Carriage
 
   def valid?
     validate!
+
   rescue StandardError
     false
+
+  rescue
+    false
   end
+
+
 end

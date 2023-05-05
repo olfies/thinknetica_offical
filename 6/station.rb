@@ -1,7 +1,13 @@
+
 # frozen_string_literal: false
 
 class Station
   @all = []
+
+# frozen_string_literal: true
+
+class Station
+
 
   attr_accessor :name,
                 :trains,
@@ -9,7 +15,11 @@ class Station
                 :passenger_train
 
   def initialize(name)
+
     @all.push(self)
+
+    @@all.push(self)
+
     @name = name
     @trains = {
       cargo: [],

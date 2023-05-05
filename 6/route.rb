@@ -1,4 +1,6 @@
+
 # frozen_string_literal: false
+
 
 class Route
   attr_accessor :list_stations
@@ -13,7 +15,11 @@ class Route
   end
 
   def delete_station(station)
-    if Array # include?
+
+
+
+    if station == @list_stations[0] || station == @list_stations.last
+
       puts 'Это конечная станция, ее нельзя удалять!'
     else
       list_stations.delete(station)
